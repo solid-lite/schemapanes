@@ -1,0 +1,28 @@
+{
+  "name": "schemapanes",
+  "version": "0.0.1",
+  "description": "Schema.org panes for SolidOS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "solid",
+    "solidos",
+    "schema.org",
+    "panes",
+    "rdf",
+    "json-ld",
+    "linked-data"
+  ],
+  "author": "Melvin Carvalho",
+  "license": "AGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/solid-lite/schemapanes.git"
+  },
+  "homepage": "https://solid-lite.github.io/schemapanes/",
+  "peerDependencies": {
+    "solidos-lite": ">=0.0.3"
+  }
+}

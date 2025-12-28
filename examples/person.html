@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Marie Curie - Person</title>
+</head>
+<body>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@id": "#me",
+  "@type": "Person",
+  "name": "Marie Curie",
+  "givenName": "Marie",
+  "familyName": "Curie",
+  "jobTitle": "Physicist and Chemist",
+  "description": "First woman to win a Nobel Prize. Pioneer in radioactivity research.",
+  "birthDate": "1867-11-07",
+  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Marie_Curie_c1920.jpg/440px-Marie_Curie_c1920.jpg",
+  "url": "https://en.wikipedia.org/wiki/Marie_Curie",
+  "award": ["Nobel Prize in Physics", "Nobel Prize in Chemistry"],
+  "knows": [
+    {
+      "@id": "#pierre",
+      "@type": "Person",
+      "name": "Pierre Curie",
+      "jobTitle": "Physicist"
+    }
+  ]
+}
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/solidos-lite/solidos-lite.js"></script>
+
+</body>
+</html>

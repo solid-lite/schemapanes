@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>schemapanes Examples</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+      background: #f8fafc;
+    }
+    h1 { color: #1e293b; }
+    p.intro { color: #64748b; font-size: 1.1rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+    .card h2 {
+      margin: 0 0 0.5rem 0;
+      color: #ea580c;
+      font-size: 1.25rem;
+    }
+    .card p {
+      margin: 0;
+      color: #64748b;
+      font-size: 0.9rem;
+    }
+    .card .type {
+      margin-top: 0.75rem;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      font-family: monospace;
+    }
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+    footer a { color: #ea580c; }
+  </style>
+</head>
+<body>
+
+<h1>schemapanes Examples</h1>
+<p class="intro">
+  Schema.org JSON-LD rendered with SolidOS panes.
+  All examples use native schema.org vocabulary.
+</p>
+
+<div class="grid">
+  <a class="card" href="person.html#me">
+    <h2>Person</h2>
+    <p>Profile with photo and contact info</p>
+    <div class="type">schema:Person</div>
+  </a>
+
+  <a class="card" href="event.html#event">
+    <h2>Event</h2>
+    <p>Conference with date and location</p>
+    <div class="type">schema:Event</div>
+  </a>
+
+  <a class="card" href="article.html#article">
+    <h2>Article</h2>
+    <p>Blog post with author and date</p>
+    <div class="type">schema:Article</div>
+  </a>
+
+  <a class="card" href="organization.html#org">
+    <h2>Organization</h2>
+    <p>Company with members</p>
+    <div class="type">schema:Organization</div>
+  </a>
+
+  <a class="card" href="recipe.html#recipe">
+    <h2>Recipe</h2>
+    <p>Cooking recipe with ingredients</p>
+    <div class="type">schema:Recipe</div>
+  </a>
+</div>
+
+<footer>
+  <a href="https://github.com/solid-lite/schemapanes">schemapanes</a> |
+  Schema.org + SolidOS
+</footer>
+
+</body>
+</html>
