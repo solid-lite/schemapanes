@@ -8,26 +8,28 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
+  "@context": {
+    "schema": "http://schema.org/"
+  },
   "@id": "#article",
-  "@type": "Article",
-  "headline": "Getting Started with Solid",
-  "description": "A beginner's guide to the Solid protocol and decentralized web.",
-  "datePublished": "2025-01-15",
-  "dateModified": "2025-01-20",
-  "author": {
-    "@type": "Person",
-    "name": "Alice Developer",
-    "url": "https://alice.solidcommunity.net/profile/card#me"
+  "@type": "schema:Article",
+  "schema:headline": "Getting Started with Solid",
+  "schema:description": "A beginner's guide to the Solid protocol and decentralized web.",
+  "schema:datePublished": "2025-01-15",
+  "schema:dateModified": "2025-01-20",
+  "schema:author": {
+    "@type": "schema:Person",
+    "schema:name": "Alice Developer",
+    "schema:url": { "@id": "https://alice.solidcommunity.net/profile/card#me" }
   },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Solid Community",
-    "url": "https://solidproject.org"
+  "schema:publisher": {
+    "@type": "schema:Organization",
+    "schema:name": "Solid Community",
+    "schema:url": { "@id": "https://solidproject.org" }
   },
-  "articleBody": "Solid (Social Linked Data) is a web decentralization project led by Tim Berners-Lee. It aims to give users control over their data by storing it in personal online data stores called Pods...",
-  "keywords": ["Solid", "decentralization", "linked data", "privacy"],
-  "url": "https://solidproject.org/getting-started"
+  "schema:articleBody": "Solid (Social Linked Data) is a web decentralization project led by Tim Berners-Lee. It aims to give users control over their data by storing it in personal online data stores called Pods.",
+  "schema:keywords": "Solid, decentralization, linked data, privacy",
+  "schema:url": { "@id": "https://solidproject.org/getting-started" }
 }
 </script>
 

@@ -8,25 +8,24 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
+  "@context": {
+    "schema": "http://schema.org/"
+  },
   "@id": "#event",
-  "@type": "Event",
-  "name": "Solid World",
-  "description": "Monthly community call for the Solid project. Join us to hear updates and connect with the community.",
-  "startDate": "2025-02-06T16:00:00Z",
-  "endDate": "2025-02-06T17:00:00Z",
-  "eventStatus": "EventScheduled",
-  "eventAttendanceMode": "OnlineEventAttendanceMode",
-  "location": {
-    "@type": "VirtualLocation",
-    "url": "https://meet.jit.si/solid-world"
+  "@type": "schema:Event",
+  "schema:name": "Solid World",
+  "schema:description": "Monthly community call for the Solid project. Join us to hear updates and connect with the community.",
+  "schema:startDate": "2025-02-06T16:00:00Z",
+  "schema:endDate": "2025-02-06T17:00:00Z",
+  "schema:eventStatus": "EventScheduled",
+  "schema:location": "Online - Jitsi Meet",
+  "schema:url": { "@id": "https://meet.jit.si/solid-world" },
+  "schema:organizer": {
+    "@type": "schema:Organization",
+    "schema:name": "Solid Project",
+    "schema:url": { "@id": "https://solidproject.org" }
   },
-  "organizer": {
-    "@type": "Organization",
-    "name": "Solid Project",
-    "url": "https://solidproject.org"
-  },
-  "image": "https://solidproject.org/assets/img/solid-emblem.svg"
+  "schema:image": { "@id": "https://solidproject.org/assets/img/solid-emblem.svg" }
 }
 </script>
 

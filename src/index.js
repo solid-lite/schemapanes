@@ -59,9 +59,14 @@ function register() {
 
   preloadLabels()
 
-  // TODO: Register custom panes here
-  // panes.register(personPane)
-  // panes.register(eventPane)
+  // Register custom panes
+  if (typeof window !== 'undefined') {
+    if (window.SchemaPersonPane) panes.register(window.SchemaPersonPane)
+    if (window.SchemaRecipePane) panes.register(window.SchemaRecipePane)
+    if (window.SchemaArticlePane) panes.register(window.SchemaArticlePane)
+    if (window.SchemaEventPane) panes.register(window.SchemaEventPane)
+    if (window.SchemaOrganizationPane) panes.register(window.SchemaOrganizationPane)
+  }
 
   console.log(`schemapanes v${VERSION} loaded`)
   return true

@@ -8,23 +8,25 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@id": "#recipe",
-  "@type": "Recipe",
-  "name": "Classic Chocolate Chip Cookies",
-  "description": "Soft and chewy chocolate chip cookies with crispy edges.",
-  "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Chocolate_Chip_Cookies_-_kanswer1.jpg/1280px-Chocolate_Chip_Cookies_-_kAnswer1.jpg",
-  "author": {
-    "@type": "Person",
-    "name": "Chef Bob"
+  "@context": {
+    "schema": "http://schema.org/"
   },
-  "prepTime": "PT15M",
-  "cookTime": "PT12M",
-  "totalTime": "PT27M",
-  "recipeYield": "24 cookies",
-  "recipeCategory": "Dessert",
-  "recipeCuisine": "American",
-  "recipeIngredient": [
+  "@id": "#recipe",
+  "@type": "schema:Recipe",
+  "schema:name": "Classic Chocolate Chip Cookies",
+  "schema:description": "Soft and chewy chocolate chip cookies with crispy edges.",
+  "schema:image": { "@id": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Chocolate_Chip_Cookies_-_kAnswer1.jpg/640px-Chocolate_Chip_Cookies_-_kAnswer1.jpg" },
+  "schema:author": {
+    "@type": "schema:Person",
+    "schema:name": "Chef Bob"
+  },
+  "schema:prepTime": "PT15M",
+  "schema:cookTime": "PT12M",
+  "schema:totalTime": "PT27M",
+  "schema:recipeYield": "24 cookies",
+  "schema:recipeCategory": "Dessert",
+  "schema:recipeCuisine": "American",
+  "schema:recipeIngredient": [
     "2 1/4 cups flour",
     "1 cup butter, softened",
     "3/4 cup sugar",
@@ -32,44 +34,8 @@
     "2 eggs",
     "1 tsp vanilla",
     "1 tsp baking soda",
-    "1 tsp salt",
     "2 cups chocolate chips"
-  ],
-  "recipeInstructions": [
-    {
-      "@type": "HowToStep",
-      "text": "Preheat oven to 375°F (190°C)"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Cream butter and sugars until fluffy"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Beat in eggs and vanilla"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Mix in flour, baking soda, and salt"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Stir in chocolate chips"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Drop by spoonfuls onto baking sheet"
-    },
-    {
-      "@type": "HowToStep",
-      "text": "Bake 9-12 minutes until golden brown"
-    }
-  ],
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "reviewCount": "127"
-  }
+  ]
 }
 </script>
 

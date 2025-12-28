@@ -8,34 +8,32 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@id": "#org",
-  "@type": "Organization",
-  "name": "Solid Project",
-  "description": "Re-decentralizing the web. Solid gives people control over their data.",
-  "url": "https://solidproject.org",
-  "logo": "https://solidproject.org/assets/img/solid-emblem.svg",
-  "foundingDate": "2015",
-  "founder": {
-    "@type": "Person",
-    "name": "Tim Berners-Lee",
-    "url": "https://www.w3.org/People/Berners-Lee/"
+  "@context": {
+    "schema": "http://schema.org/"
   },
-  "member": [
+  "@id": "#org",
+  "@type": "schema:Organization",
+  "schema:name": "Solid Project",
+  "schema:description": "Re-decentralizing the web. Solid gives people control over their data.",
+  "schema:url": { "@id": "https://solidproject.org" },
+  "schema:logo": { "@id": "https://solidproject.org/assets/img/solid-emblem.svg" },
+  "schema:foundingDate": "2015",
+  "schema:founder": {
+    "@type": "schema:Person",
+    "schema:name": "Tim Berners-Lee",
+    "schema:url": { "@id": "https://www.w3.org/People/Berners-Lee/" }
+  },
+  "schema:member": [
     {
-      "@type": "Person",
-      "name": "Tim Berners-Lee",
-      "jobTitle": "Project Lead"
+      "@type": "schema:Person",
+      "schema:name": "Tim Berners-Lee",
+      "schema:jobTitle": "Project Lead"
     },
     {
-      "@type": "Person",
-      "name": "Sarven Capadisli",
-      "jobTitle": "Spec Editor"
+      "@type": "schema:Person",
+      "schema:name": "Sarven Capadisli",
+      "schema:jobTitle": "Spec Editor"
     }
-  ],
-  "sameAs": [
-    "https://github.com/solid",
-    "https://twitter.com/project_solid"
   ]
 }
 </script>
