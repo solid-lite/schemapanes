@@ -8,10 +8,13 @@
 
 const SCHEMA = $rdf.Namespace('http://schema.org/')
 
+// Simple inline SVG icon as data URI
+const ORG_ICON = 'data:image/svg+xml;base64,' + btoa('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M12 11v4"/><path d="M8 11v4"/><path d="M16 11v4"/></svg>')
+
 const organizationPane = {
   name: 'schemaOrganization',
 
-  icon: $rdf.sym('https://solid-lite.github.io/schemapanes/icons/organization.svg'),
+  icon: ORG_ICON,
 
   label: function(subject, context) {
     const store = context.session.store
@@ -31,7 +34,12 @@ const organizationPane = {
 
     const div = dom.createElement('div')
     div.className = 'schema-organization-pane'
-    div.style.cssText = 'font-family: system-ui, sans-serif; padding: 20px; max-width: 600px;'
+    div.style.cssText = `
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      padding: 32px;
+      max-width: 560px;
+      margin: 0 auto;
+    `
 
     // Get properties
     const name = store.anyValue(subject, SCHEMA('name'))
@@ -41,81 +49,205 @@ const organizationPane = {
     const foundingDate = store.anyValue(subject, SCHEMA('foundingDate'))
     const founder = store.any(subject, SCHEMA('founder'))
     const members = store.each(subject, SCHEMA('member'))
+    const email = store.anyValue(subject, SCHEMA('email'))
+    const telephone = store.anyValue(subject, SCHEMA('telephone'))
 
-    // Build card
+    // Main card
     const card = dom.createElement('div')
-    card.style.cssText = 'background: white; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);'
+    card.style.cssText = `
+      background: #fff;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    `
 
-    // Header with logo
+    // Header with gradient
     const header = dom.createElement('div')
-    header.style.cssText = 'display: flex; gap: 20px; align-items: center; margin-bottom: 20px;'
+    header.style.cssText = `
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+    `
 
+    // Logo
     if (logo) {
+      const logoWrap = dom.createElement('div')
+      logoWrap.style.cssText = `
+        width: 100px;
+        height: 100px;
+        background: white;
+        border-radius: 20px;
+        padding: 16px;
+        margin: 0 auto 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      `
       const img = dom.createElement('img')
       img.src = logo.uri || logo.value
-      img.style.cssText = 'width: 80px; height: 80px; object-fit: contain; border-radius: 8px;'
-      header.appendChild(img)
+      img.style.cssText = `
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      `
+      logoWrap.appendChild(img)
+      header.appendChild(logoWrap)
     }
 
-    const headerInfo = dom.createElement('div')
-
+    // Name
     if (name) {
-      const h2 = dom.createElement('h2')
-      h2.textContent = name
-      h2.style.cssText = 'margin: 0 0 4px 0; color: #1e293b;'
-      headerInfo.appendChild(h2)
+      const h1 = dom.createElement('h1')
+      h1.textContent = name
+      h1.style.cssText = `
+        margin: 0;
+        color: white;
+        font-size: 1.75rem;
+        font-weight: 700;
+      `
+      header.appendChild(h1)
     }
 
+    // Founded year
     if (foundingDate) {
-      const p = dom.createElement('p')
-      p.textContent = 'Founded ' + foundingDate
-      p.style.cssText = 'margin: 0; color: #94a3b8; font-size: 0.9em;'
-      headerInfo.appendChild(p)
+      const founded = dom.createElement('div')
+      founded.textContent = 'Est. ' + foundingDate
+      founded.style.cssText = `
+        margin-top: 8px;
+        color: rgba(255,255,255,0.8);
+        font-size: 0.9rem;
+      `
+      header.appendChild(founded)
     }
 
-    header.appendChild(headerInfo)
     card.appendChild(header)
 
+    // Content
+    const content = dom.createElement('div')
+    content.style.cssText = 'padding: 32px;'
+
+    // Description
     if (description) {
-      const p = dom.createElement('p')
-      p.textContent = description
-      p.style.cssText = 'margin: 0 0 20px 0; color: #64748b; line-height: 1.6;'
-      card.appendChild(p)
+      const desc = dom.createElement('p')
+      desc.textContent = description
+      desc.style.cssText = `
+        margin: 0 0 24px 0;
+        color: #475569;
+        line-height: 1.7;
+        font-size: 1rem;
+        text-align: center;
+      `
+      content.appendChild(desc)
+    }
+
+    // Stats row
+    const stats = dom.createElement('div')
+    stats.style.cssText = `
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      padding: 20px 0;
+      border-top: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+      margin-bottom: 24px;
+    `
+
+    if (foundingDate) {
+      const years = new Date().getFullYear() - parseInt(foundingDate)
+      if (years > 0) {
+        const stat = dom.createElement('div')
+        stat.style.cssText = 'text-align: center;'
+        const val = dom.createElement('div')
+        val.textContent = years + '+'
+        val.style.cssText = 'font-size: 1.5rem; font-weight: 700; color: #0ea5e9;'
+        const label = dom.createElement('div')
+        label.textContent = 'Years'
+        label.style.cssText = 'font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;'
+        stat.appendChild(val)
+        stat.appendChild(label)
+        stats.appendChild(stat)
+      }
+    }
+
+    if (members.length > 0) {
+      const stat = dom.createElement('div')
+      stat.style.cssText = 'text-align: center;'
+      const val = dom.createElement('div')
+      val.textContent = members.length
+      val.style.cssText = 'font-size: 1.5rem; font-weight: 700; color: #0ea5e9;'
+      const label = dom.createElement('div')
+      label.textContent = 'Team'
+      label.style.cssText = 'font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em;'
+      stat.appendChild(val)
+      stat.appendChild(label)
+      stats.appendChild(stat)
+    }
+
+    if (stats.children.length > 0) {
+      content.appendChild(stats)
     }
 
     // Founder
     if (founder) {
       const founderName = store.anyValue(founder, SCHEMA('name'))
       if (founderName) {
-        const founderDiv = dom.createElement('div')
-        founderDiv.style.cssText = 'display: flex; align-items: center; gap: 8px; margin-bottom: 16px; padding: 12px; background: #f8fafc; border-radius: 8px;'
+        const section = dom.createElement('div')
+        section.style.cssText = 'margin-bottom: 24px;'
 
-        const label = dom.createElement('span')
-        label.textContent = 'Founder:'
-        label.style.cssText = 'color: #94a3b8; font-size: 0.9em;'
-        founderDiv.appendChild(label)
+        const label = dom.createElement('div')
+        label.textContent = 'Founded by'
+        label.style.cssText = 'font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;'
+        section.appendChild(label)
 
-        const founderLink = dom.createElement('span')
-        founderLink.textContent = founderName
-        founderLink.style.cssText = 'color: #1e293b; font-weight: 500;'
-        founderDiv.appendChild(founderLink)
+        const founderCard = dom.createElement('div')
+        founderCard.style.cssText = `
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: #f8fafc;
+          padding: 12px 16px;
+          border-radius: 12px;
+        `
 
-        card.appendChild(founderDiv)
+        const avatar = dom.createElement('div')
+        avatar.textContent = founderName.charAt(0).toUpperCase()
+        avatar.style.cssText = `
+          width: 40px;
+          height: 40px;
+          background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+          color: white;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+        `
+        founderCard.appendChild(avatar)
+
+        const nameEl = dom.createElement('div')
+        nameEl.textContent = founderName
+        nameEl.style.cssText = 'font-weight: 600; color: #1e293b;'
+        founderCard.appendChild(nameEl)
+
+        section.appendChild(founderCard)
+        content.appendChild(section)
       }
     }
 
-    // Members
+    // Team members
     if (members.length > 0) {
-      const membersSection = dom.createElement('div')
-      membersSection.style.cssText = 'margin-top: 20px;'
+      const section = dom.createElement('div')
+      section.style.cssText = 'margin-bottom: 24px;'
 
-      const h3 = dom.createElement('h3')
-      h3.textContent = 'Team'
-      h3.style.cssText = 'margin: 0 0 12px 0; color: #1e293b; font-size: 1em;'
-      membersSection.appendChild(h3)
+      const label = dom.createElement('div')
+      label.textContent = 'Team Members'
+      label.style.cssText = 'font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px;'
+      section.appendChild(label)
 
-      const membersList = dom.createElement('div')
-      membersList.style.cssText = 'display: flex; flex-direction: column; gap: 8px;'
+      const grid = dom.createElement('div')
+      grid.style.cssText = `
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+      `
 
       members.forEach(member => {
         const memberName = store.anyValue(member, SCHEMA('name'))
@@ -123,45 +255,107 @@ const organizationPane = {
 
         if (memberName) {
           const memberCard = dom.createElement('div')
-          memberCard.style.cssText = 'display: flex; align-items: center; gap: 12px; padding: 8px 12px; background: #f8fafc; border-radius: 6px;'
+          memberCard.style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 12px;
+          `
 
           const avatar = dom.createElement('div')
           avatar.textContent = memberName.charAt(0).toUpperCase()
-          avatar.style.cssText = 'width: 32px; height: 32px; background: #e0e7ff; color: #4f46e5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 0.9em;'
+          avatar.style.cssText = `
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            color: #0284c7;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+          `
           memberCard.appendChild(avatar)
 
-          const memberInfo = dom.createElement('div')
-
-          const nameSpan = dom.createElement('div')
-          nameSpan.textContent = memberName
-          nameSpan.style.cssText = 'color: #1e293b; font-weight: 500;'
-          memberInfo.appendChild(nameSpan)
+          const info = dom.createElement('div')
+          const nameEl = dom.createElement('div')
+          nameEl.textContent = memberName
+          nameEl.style.cssText = 'font-weight: 600; color: #1e293b; font-size: 0.9rem;'
+          info.appendChild(nameEl)
 
           if (memberTitle) {
-            const titleSpan = dom.createElement('div')
-            titleSpan.textContent = memberTitle
-            titleSpan.style.cssText = 'color: #64748b; font-size: 0.85em;'
-            memberInfo.appendChild(titleSpan)
+            const title = dom.createElement('div')
+            title.textContent = memberTitle
+            title.style.cssText = 'color: #64748b; font-size: 0.8rem;'
+            info.appendChild(title)
           }
 
-          memberCard.appendChild(memberInfo)
-          membersList.appendChild(memberCard)
+          memberCard.appendChild(info)
+          grid.appendChild(memberCard)
         }
       })
 
-      membersSection.appendChild(membersList)
-      card.appendChild(membersSection)
+      section.appendChild(grid)
+      content.appendChild(section)
     }
 
-    // Website link
+    // Contact / Actions
+    const actions = dom.createElement('div')
+    actions.style.cssText = `
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    `
+
     if (url) {
-      const link = dom.createElement('a')
-      link.href = url.uri || url.value
-      link.textContent = 'Visit Website →'
-      link.style.cssText = 'display: inline-block; margin-top: 20px; color: #2563eb; text-decoration: none; font-weight: 500;'
-      card.appendChild(link)
+      const btn = dom.createElement('a')
+      btn.href = url.uri || url.value
+      btn.target = '_blank'
+      btn.textContent = 'Visit Website'
+      btn.style.cssText = `
+        flex: 1;
+        min-width: 140px;
+        display: block;
+        text-align: center;
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: white;
+        padding: 14px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+      `
+      actions.appendChild(btn)
     }
 
+    if (email) {
+      const btn = dom.createElement('a')
+      btn.href = 'mailto:' + email
+      btn.textContent = 'Contact'
+      btn.style.cssText = `
+        flex: 1;
+        min-width: 140px;
+        display: block;
+        text-align: center;
+        background: #f1f5f9;
+        color: #0284c7;
+        padding: 14px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+      `
+      actions.appendChild(btn)
+    }
+
+    if (actions.children.length > 0) {
+      content.appendChild(actions)
+    }
+
+    card.appendChild(content)
     div.appendChild(card)
 
     return div
